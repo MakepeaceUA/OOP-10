@@ -191,7 +191,7 @@ MyString operator+(int size, MyString& obj)
 
 istream& operator>>(istream& is, MyString& Str) 
 {
-    cout << "Set string\t";
+    cout << "Set string ";
     is >> Str.str;
     return is;
 }
