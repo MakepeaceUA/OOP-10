@@ -219,14 +219,23 @@ ostream& operator<<(ostream& os, const MyString& Str)
     return os;
 }
 
+MyString Func() 
+{
+    MyString Str = "Hello world";
+    return Str;
+}
+
+
 int main()
 {
-    MyString obj1;
-    MyString obj2(20);
+    MyString obj1();
+    MyString obj2 = Func();
     MyString obj3("Hello");
 
-    cin >> obj1;
-    cout << obj1;
+    if (obj2.GetStr())
+        cout << obj2.GetStr() << "\n";
+    else
+        cout << "Erorr\n";
 }
 
 
