@@ -37,20 +37,29 @@ public:
         count++;
     }
 
+    MyString(MyString&& other) 
+    {
+        str = other.str;
+        size = other.size;
+        other.str = nullptr;
+        other.size = 0;
+        count++;
+    }
+
     friend istream& operator>>(istream& is, MyString& Str);
     friend ostream& operator<<(ostream& os, const MyString& Str);
 
-    
+
     void SetStr(char* string)
     {
         str = string;
     }
-        
+
     char* GetStr()
     {
         return str;
     }
-       
+
 
     void Input()
     {
@@ -79,19 +88,19 @@ public:
          count--;
      }*/
 
-    MyString operator++() 
+    MyString operator++()
     {
         int sz = strlen(str);
         char* new_str = new char[sz + 2];
-        
+
         strcpy_s(new_str, sz + 2, str);
-        
+
         new_str[sz] = 'x';
         new_str[sz + 1] = '\0';
-        
+
         delete[] str;
         str = new_str;
-        
+
         return *this;
     }
     MyString operator++(int)
@@ -113,7 +122,7 @@ public:
     MyString operator--()
     {
         str[size - 1] = '\0';
-        
+
         return *this;
     }
     MyString operator--(int)
@@ -123,29 +132,29 @@ public:
         return *this;
     }
 
-    MyString operator+(int value) 
+    MyString operator+(int value)
     {
         int sz = strlen(str);
         char* new_str = new char[sz + 1 + value];
 
         strcpy_s(new_str, sz + 1 + value, str);
-        
+
         for (int i = 0; i < value; i++)
         {
             new_str[sz + i] = 'x';
         }
-        
+
         new_str[sz + value] = '\0';
-        
+
         return MyString(new_str);
     }
 
 
-    MyString operator-(int value) 
+    MyString operator-(int value)
     {
         int sz = strlen(str);
         str[sz - value] = '\0';
-        
+
         return *this;
     }
     MyString& operator=(const MyString& obj)
@@ -191,8 +200,16 @@ MyString operator+(int size, MyString& obj)
 
 istream& operator>>(istream& is, MyString& Str) 
 {
-    cout << "Set string ";
-    is >> Str.str;
+    cout << "Enter your string: ";
+    char buf[100];
+    
+    is.getline(buf, 100);
+    Str.size = strlen(buf);
+    delete[] Str.str;
+    
+    Str.str = new char[Str.size + 1];
+    strcpy_s(Str.str, Str.size + 1, buf);
+    
     return is;
 }
 
@@ -207,7 +224,7 @@ int main()
     MyString obj1;
     MyString obj2(20);
     MyString obj3("Hello");
-    
+
     cin >> obj1;
     cout << obj1;
 }
